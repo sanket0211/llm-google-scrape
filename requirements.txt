@@ -1,0 +1,5 @@
+python-whois
+langchain
+openai
+tiktoken
+faiss-cpu
