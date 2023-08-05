@@ -31,7 +31,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-# Index.py
+## Index.py
 The index.py script is the main script that drives the entire process of domain information extraction, news crawling, embeddings creation, and structured information extraction.
 
 ```bash 
@@ -40,19 +40,19 @@ python index.py
 
 The script will prompt you to enter the domain name of a company. It will then check if the domain is registered, and if it is, it will fetch domain information and crawl news articles related to the domain and the company name (if available). The crawled articles will be used to create embeddings and then indexed using FAISS.
 
-# Domain.py
+## Domain.py
 The domain.py script contains the Domain class, which provides functionality to check if a domain is registered and fetch domain information.
 
-# GoogleNewsAPI.py
+## GoogleNewsAPI.py
 The google_news_api.py script contains the GoogleNewsAPI class, which interacts with the Google News API to fetch news articles related to a given query.
 
-# Embeddings.py
+## Embeddings.py
 The embeddings.py script contains the Embeddings class, which handles OpenAI embeddings and creates an article index using FAISS.
 
-# Prompts.py
+## Prompts.py
 The prompts.py script contains the Prompts class, which performs structured information extraction using LLM prompt engineering.
 
-# Output
+## Output
 
 The output of the script will be structured information for different event types saved in a JSON file named output.json. The output will be stored in the following format:
 
