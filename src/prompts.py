@@ -22,14 +22,14 @@ class Prompts:
         """
 
         self.question_partnership = """
-            fill following fields related to partnership news if any based on the given context.
+            fill following fields related to company partnership news if any based on the given context.
             names_of_partners:[list of partnet company names] or "not found"
             domains_of_partners:[list of domains of partner companies] or "not found"
             announcement_date:<announcement date> or "not found"
         """
 
         self.question_investment_received = """
-            fill following fields related to investment received news if any based on the given context else write "not found" for each field.
+            fill following fields related to investment received if any based on the given context else write "not found" for each field.
             names_of_investors:[list of investor names] or "not found"
             domains_of_investors:[list of domains of investors] or "not found"
             announcement_date:<announcement date> or "not found"
@@ -37,7 +37,7 @@ class Prompts:
         """
 
         self.question_investment_made = """
-            fill following fields related to investment made by the company news if any based on the given context else write "not found" for each field.
+            fill following fields related to investment made by the company if any based on the given context else write "not found" for each field.
             investee_name:<name of the company in which the company invested> or "not found"
             investee_domain:<domain of the company in which the company invested> or "not found"
             announcement_date:<announcement date> or "not found"
@@ -45,14 +45,14 @@ class Prompts:
         """
 
         self.question_new_hire = """
-            fill following fields related to new hires news if any based on the given context else write "not found" for each field.
+            fill following fields related to new hires if any based on the given context else write "not found" for each field.
             name_of_hires:[list of names of hires] or "not found"
             titles_of_hire:[list of titles of the hires] or "not found"
             announcement_date:<announcement date>
         """
 
         self.question_issues = """
-            fill following fields related to company corporate issue news if any based on the given context else write "not found" for each field.
+            fill following fields related to company corporate issue if any based on the given context else write "not found" for each field.
             problems_found:[list of problems found] or "not found"
             announcement_date:<announcement date> or "not found"
             entities_involved:[list of entities involved in the problems found] or "not found"
@@ -60,7 +60,7 @@ class Prompts:
         """
         
         self.question_competitor_found = """
-            fill following fields related to company's competitor informateion news if any based on the given context else write "not found" for each field.
+            fill following fields related to company's competitor informateion if any based on the given context else write "not found" for each field.
             competitor_name:[list of partnet competitor company names] or "not found"
             competitor_domain:[list of competitor domains] or "not found"
             article_date:<article date>
@@ -107,14 +107,27 @@ class Prompts:
         
     def post_process_output(self, output):
         temp = {}
+        print(output)
         answers = output['answer']
         answers = answers.split("\n")
-        print(answers)
         for answer in answers:
             if ":" in answer:
                 answer = answer.split(":")
                 temp[answer[0]]=answer[1]
-        temp['news_url']=output['sources']
+        #temp['news_article']=output['local_path']
+        if output['sources']!="":
+            metadata = output["sources"]
+            links = metadata.split('\n')
+            temp['news_url']=""
+            temp['news_article']=""
+            for link in links:
+                if '|' in link:
+                    temp['news_url']+=link.split('|')[0] +','
+                    temp['news_article']+=link.split('|')[1] + ','
+        else:
+            temp['news_url']="not found"
+            temp['news_article']="not found"
+        print(temp)
         return temp
 
 if __name__ == "__main__":

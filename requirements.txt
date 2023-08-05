@@ -1,5 +1,8 @@
 python-whois
+requests
+bs4
 langchain
+tqdm
 openai
 tiktoken
 faiss-cpu
